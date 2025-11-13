@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="id" class="h-full">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran SMP</title>
+    <script src="/_sdk/element_sdk.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .subject-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .filter-btn {
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn.active {
+            transform: scale(1.05);
+        }
+    </style>
+    <style>
+        @view-transition {
+            navigation: auto;
+        }
+    </style>
+</head>
+
+<body class="h-full bg-gradient-to-br from-blue-50 to-indigo-100 font-sans">
+    <div class="min-h-full"><!-- Header -->
+        <header class="bg-white shadow-lg border-b-4 border-blue-500">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="text-center">
+                    <h1 id="main-title" class="text-4xl font-bold text-gray-900 mb-2">Media Pembelajaran SMP</h1>
+                    <p id="subtitle" class="text-xl text-gray-600">Koleksi lengkap media pembelajaran untuk siswa SMP
+                    </p>
+                </div>
+            </div>
+        </header>
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"><!-- Search and Filter Section -->
+            <div class="mb-8">
+                <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+                    <div class="relative flex-1 max-w-md"><input type="text" id="search-input"
+                            placeholder="Cari media pembelajaran..."
+                            class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <svg class="absolute left-3 top-3.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
+                            viewbox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="flex flex-wrap gap-2"><button
+                            class="filter-btn active px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                            data-filter="semua"> Semua </button> <button
+                            class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                            data-filter="matematika"> Matematika </button> <button
+                            class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                            data-filter="ipa"> IPA </button> <button
+                            class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                            data-filter="bahasa"> Bahasa Indonesia </button> <button
+                            class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                            data-filter="ips"> IPS </button>
+                    </div>
+                </div>
+            </div><!-- Media Grid -->
+            <div id="media-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Media cards will be populated by JavaScript -->
+            </div><!-- No Results Message -->
+            <div id="no-results" class="hidden text-center py-12">
+                <div class="text-gray-400 text-6xl mb-4">
+                    📚
+                </div>
+                <h3 class="text-xl font-semibold text-gray-600 mb-2">Tidak ada hasil ditemukan</h3>
+                <p class="text-gray-500">Coba ubah kata kunci pencarian atau filter yang dipilih</p>
+            </div>
+        </main>
+    </div>
+    <script>
+        // Default configuration
+        const defaultConfig = {
+            main_title: "Media Pembelajaran Interaktif SMP",
+            subtitle: "Koleksi lengkap media pembelajaran untuk siswa SMP by Nur Erna",
+            search_placeholder: "Cari media pembelajaran...",
+            background_color: "#dbeafe",
+            surface_color: "#ffffff",
+            text_color: "#1f2937",
+            primary_action_color: "#2563eb",
+            secondary_action_color: "#6b7280"
+        };
+
+        // Media pembelajaran data
+        const mediaData = [
+            {
+                id: 1,
+                title: "Petualangan Listrik",
+                subject: "ipa",
+                type: "Interaktif",
+                duration: "15 menit",
+                description: "Menjelajahi konsep dasar listrik melalui simulasi interaktif",
+                icon: "⚡",
+                color: "bg-blue-100 text-blue-600",
+                url: "ipa-listrik"
+            },
+            {
+                id: 2,
+                title: "Penjelajah Tubuh Manusia",
+                subject: "ipa",
+                type: "Interaktif",
+                duration: "20 menit",
+                description: "Eksplorasi sistem organ dan fungsi tubuh manusia secara interaktif",
+                icon: "🧍",
+                color: "bg-green-100 text-green-600",
+                url: "ipa-sistem-manusia"
+            },
+
+        ];
+
+        let filteredData = [...mediaData];
+
+        // Render media cards
+        function renderMediaCards(data) {
+            const grid = document.getElementById('media-grid');
+            const noResults = document.getElementById('no-results');
+
+            if (data.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+
+            grid.innerHTML = data.map(media => `
+                <div class="card-hover bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="subject-icon ${media.color}">
+                                ${media.icon}
+                            </div>
+                            <span class="px-3 py-1 text-xs font-semibold bg-gray-100 text-gray-600 rounded-full">
+                                ${media.type}
+                            </span>
+                        </div>
+                        
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">${media.title}</h3>
+                        <p class="text-gray-600 text-sm mb-4">${media.description}</p>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-sm text-gray-500">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                ${media.duration}
+                            </div>
+                            <a href="${media.url}" target="_blank" class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors text-center inline-block no-underline">
+    Buka Media
+</a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter functionality
+        function filterMedia(category) {
+            if (category === 'semua') {
+                filteredData = [...mediaData];
+            } else {
+                filteredData = mediaData.filter(media => media.subject === category);
+            }
+
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            if (searchTerm) {
+                filteredData = filteredData.filter(media =>
+                    media.title.toLowerCase().includes(searchTerm) ||
+                    media.description.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            renderMediaCards(filteredData);
+        }
+
+        // Search functionality
+        function searchMedia(searchTerm) {
+            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+
+            let baseData = activeFilter === 'semua' ? mediaData :
+                mediaData.filter(media => media.subject === activeFilter);
+
+            if (searchTerm) {
+                filteredData = baseData.filter(media =>
+                    media.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    media.description.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            } else {
+                filteredData = baseData;
+            }
+
+            renderMediaCards(filteredData);
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize media grid
+            renderMediaCards(mediaData);
+
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    // Update active state
+                    document.querySelectorAll('.filter-btn').forEach(b => {
+                        b.classList.remove('active', 'bg-blue-600', 'text-white');
+                        b.classList.add('bg-gray-200', 'text-gray-700');
+                    });
+
+                    this.classList.add('active', 'bg-blue-600', 'text-white');
+                    this.classList.remove('bg-gray-200', 'text-gray-700');
+
+                    filterMedia(this.dataset.filter);
+                });
+            });
+
+            // Search input
+            document.getElementById('search-input').addEventListener('input', function () {
+                searchMedia(this.value);
+            });
+
+            // Media card click handlers
+            document.addEventListener('click', function (e) {
+                if (e.target.textContent === 'Buka Media') {
+                    e.preventDefault();
+
+                    // Find the media data for this card
+                    const cardElement = e.target.closest('.card-hover');
+                    const cardIndex = Array.from(document.querySelectorAll('.card-hover')).indexOf(cardElement);
+                    const mediaItem = filteredData[cardIndex];
+
+                    if (mediaItem && mediaItem.url) {
+                        // Open URL in new tab
+                        window.open(mediaItem.url, '_blank', 'noopener,noreferrer');
+
+                        // Show feedback
+                        const button = e.target;
+                        const originalText = button.textContent;
+                        button.textContent = 'Dibuka!';
+                        button.classList.add('bg-green-600');
+                        button.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+
+                        setTimeout(() => {
+                            button.textContent = originalText;
+                            button.classList.remove('bg-green-600');
+                            button.classList.add('bg-blue-600', 'hover:bg-blue-700');
+                        }, 2000);
+                    }
+                }
+            });
+        });
+
+        // Element SDK implementation
+        async function onConfigChange(config) {
+            // Update text content
+            document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+            document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
+            document.getElementById('search-input').placeholder = config.search_placeholder || defaultConfig.search_placeholder;
+
+            // Update colors
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const primaryActionColor = config.primary_action_color || defaultConfig.primary_action_color;
+            const secondaryActionColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+
+            document.body.style.background = `linear-gradient(to bottom right, ${backgroundColor}, #c7d2fe)`;
+
+            // Update surface colors
+            document.querySelectorAll('.bg-white').forEach(el => {
+                el.style.backgroundColor = surfaceColor;
+            });
+
+            // Update text colors
+            document.querySelectorAll('.text-gray-900').forEach(el => {
+                el.style.color = textColor;
+            });
+
+            // Update primary action colors
+            document.querySelectorAll('.bg-blue-600').forEach(el => {
+                el.style.backgroundColor = primaryActionColor;
+            });
+
+            // Update filter button colors
+            const activeBtn = document.querySelector('.filter-btn.active');
+            if (activeBtn) {
+                activeBtn.style.backgroundColor = primaryActionColor;
+            }
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            config.surface_color = value;
+                            window.elementSdk.setConfig({ surface_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            window.elementSdk.setConfig({ text_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.primary_action_color || defaultConfig.primary_action_color,
+                        set: (value) => {
+                            config.primary_action_color = value;
+                            window.elementSdk.setConfig({ primary_action_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["main_title", config.main_title || defaultConfig.main_title],
+                ["subtitle", config.subtitle || defaultConfig.subtitle],
+                ["search_placeholder", config.search_placeholder || defaultConfig.search_placeholder]
+            ]);
+        }
+
+        // Initialize Element SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+    </script>
+
+</html>
