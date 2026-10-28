@@ -75,6 +75,7 @@
           </option>
           <option name="settings" value="false" />
           <option name="fullScreenToggle" value="false" />
+          <option name="playbackSpeedControl" value="false" />
         </options>
       </optiongroup>
       <optiongroup name="bottombaroptions">
@@ -1291,12 +1292,13 @@
             <slidelink slideid="_player.6IMbYWZuuqW.63LJrWv9l5S" displaytext="masalah" expand="false" type="slide" />
             <slidelink slideid="_player.6IMbYWZuuqW.6V6JfmI9sZ8" displaytext="peta misi" expand="false" type="slide" />
             <slidelink slideid="_player.6IMbYWZuuqW.5fOvcLLmtfP" displaytext="ensiklopedia" expand="false" type="slide" />
+            <slidelink slideid="_player.6IMbYWZuuqW.6631UuuiaOQ" displaytext="pengembang" expand="false" type="slide" />
           </links>
         </slidelink>
         <slidelink slideid="_player.68tdm6GjlJC" displaytext="POS1" expand="true" type="slide">
           <links>
             <slidelink slideid="_player.68tdm6GjlJC.6fDhdyMB86I" displaytext="Pos 1" expand="false" type="slide" />
-            <slidelink slideid="_player.68tdm6GjlJC.6FVPju0gwdQ" displaytext="Drag and Drop" expand="false" type="slide" />
+            <slidelink slideid="_player.68tdm6GjlJC.6FVPju0gwdQ" displaytext="abiotikbiotik" expand="false" type="slide" />
           </links>
         </slidelink>
         <slidelink slideid="_player.6Eqfgj2ZsNA" displaytext="POS2" expand="true" type="slide">
@@ -1314,7 +1316,7 @@
         </slidelink>
         <slidelink slideid="_player.61cFOLGtjcm" displaytext="POS4" expand="true" type="slide">
           <links>
-            <slidelink slideid="_player.61cFOLGtjcm.67wlGBqy4mG" displaytext="Drag and Drop" expand="false" type="slide" />
+            <slidelink slideid="_player.61cFOLGtjcm.67wlGBqy4mG" displaytext="Pos 4" expand="false" type="slide" />
           </links>
         </slidelink>
         <slidelink slideid="_player.6npL4i0MMsm" displaytext="POS5" expand="true" type="slide">
