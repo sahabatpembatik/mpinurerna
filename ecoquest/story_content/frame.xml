@@ -35,7 +35,7 @@
           </optionlist>
           <option name="time_enabled" value="false">
             <options>
-              <option name="time_format" value="" />
+              <option name="time_format" value="elapsed" />
             </options>
           </option>
           <option name="video_enabled" value="false">
@@ -1317,6 +1317,12 @@
         <slidelink slideid="_player.61cFOLGtjcm" displaytext="POS4" expand="true" type="slide">
           <links>
             <slidelink slideid="_player.61cFOLGtjcm.67wlGBqy4mG" displaytext="Pos 4" expand="false" type="slide" />
+            <slidelink slideid="_player.61cFOLGtjcm.6jUseG0ebch" displaytext="POs 4 SOal 1" expand="false" type="slide" />
+            <slidelink slideid="_player.61cFOLGtjcm.6rWieo3hxj6" displaytext="POs 4 SOal 1" expand="false" type="slide" />
+            <slidelink slideid="_player.61cFOLGtjcm.5aMABR9S4fV" displaytext="POs 4 SOal 2" expand="false" type="slide" />
+            <slidelink slideid="_player.61cFOLGtjcm.6MEk9aaoCuN" displaytext="POs 4 SOal 4" expand="false" type="slide" />
+            <slidelink slideid="_player.61cFOLGtjcm.5sbhWaOPOtT" displaytext="POs 4 SOal 3" expand="false" type="slide" />
+            <slidelink slideid="_player.61cFOLGtjcm.5uesOKI3kjE" displaytext="POs 4 SOal 5" expand="false" type="slide" />
           </links>
         </slidelink>
         <slidelink slideid="_player.6npL4i0MMsm" displaytext="POS5" expand="true" type="slide">
