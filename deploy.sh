@@ -1,7 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
 git add .
-git commit -m "Update viewport settings in index.html files"
+if ! git diff --cached --quiet; then
+    git commit -m "Update viewport settings in index.html files"
+fi
 git push origin main
-File: ipa-listrik/deploy.sh
---- a/file:///c%3A/webku/mpinurerna/ipa-listrik/deploy.sh
-+++ b/file:///c%3A/webku/mpinurerna/ipa-listrik/deploy.sh
-@@ -1,4 +1,4 @@
